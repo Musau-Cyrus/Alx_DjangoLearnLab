@@ -1,3 +1,5 @@
 ## Update
+
 ```
-Book.objects.filter(id=1).update(title="Nineteen Eighty Four")
+Book.objects.filter(titlr = "1984").update(title="Nineteen Eighty Four")
+```
