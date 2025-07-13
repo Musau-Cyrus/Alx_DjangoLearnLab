@@ -1,3 +1,3 @@
 ## Retrieve
 ``` 
-books = Book.object.all()
+book = Book.objects.get(title="1984")
