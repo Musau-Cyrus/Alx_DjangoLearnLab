@@ -20,7 +20,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        feilds = "__all__"
+        fields = "__all__"
 
      # This method validates the 'publication_year' field to ensure it is not in the future.    
     def validate_publication_year(self, value):
