@@ -79,10 +79,17 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if os.getenv("DATABASE_URL"):
-    DATABASES = {
-        "default": dj_database_url.parse(os.environ["DATABASE_URL"], conn_max_age=600, ssl_require=True)
-    }
+if os.getenv("NAME") or os.getenv("USER") or os.getenv("HOST"):
+        DATABASES = {
+            "default": {
+                "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.postgresql"),
+                "NAME": os.getenv("NAME"),
+                "USER": os.getenv("USER"),
+                "PASSWORD": os.getenv("PASSWORD", ""),
+                "HOST": os.getenv("HOST", "127.0.0.1"),
+                "PORT": os.getenv("PORT", "5432"),
+            }
+        }
 else:
     import logging
     logging.warning("No DATABASE_URL environment variable set, falling back to sqlite3")
