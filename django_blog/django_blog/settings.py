@@ -61,7 +61,7 @@ ROOT_URLCONF = 'django_blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,17 +79,12 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if os.getenv("NAME") or os.getenv("USER") or os.getenv("HOST"):
-        DATABASES = {
-            "default": {
-                "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.postgresql"),
-                "NAME": os.getenv("NAME"),
-                "USER": os.getenv("USER"),
-                "PASSWORD": os.getenv("PASSWORD", ""),
-                "HOST": os.getenv("HOST", "127.0.0.1"),
-                "PORT": os.getenv("PORT", "5432"),
-            }
-        }
+if os.getenv("DATABASE_URL"):
+    DATABASES = {
+        "default": dj_database_url.parse(
+            os.environ["DATABASE_URL"], conn_max_age=600, ssl_require=True
+        )
+    }
 else:
     import logging
     logging.warning("No DATABASE_URL environment variable set, falling back to sqlite3")
@@ -144,12 +139,15 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATICFILES_DIRS = []
+_static = BASE_DIR / "static"
+if _static.exists():
+    STATICFILES_DIRS = [_static]
 
-TEMPLATES = [
-    {
-        'DIRS': [BASE_DIR / 'templates'],
-    },
-]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+
+#Auth redirects
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'profile'
+LOGOUT_REDIRECT_URL = 'login'
