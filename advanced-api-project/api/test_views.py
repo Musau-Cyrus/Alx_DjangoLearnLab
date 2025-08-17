@@ -1,10 +1,10 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 from rest_framework import status
 from .models import Author, Book
 
-class BookApiTestCase(TestCase):
+class BookApiTestCase(APITestCase):
     #Unit tests for the CRUD operations and additional functionalities
     def setUp(self):
 
