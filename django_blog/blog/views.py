@@ -31,7 +31,7 @@ def profile(request):
         form = ProfileForm(instance=request.user)
     return render(request, "blog/profile.html", {"form": form})
 
-# Create comment
+# CommentCreateView
 @login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
