@@ -2,6 +2,15 @@ from rest_framework import serializers
 from .models import Book, Author
 from datetime import date
 
+# The AuthorSerializer is user to convert the author model instances into a JSON format and vice versa
+# We include the author id so that the client API can use    it to refer to an auther's ID whenever needed and 'name' to see the authors name
+class AuthorSerializer(serializers.ModelSerializer):
+
+    books = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    class Meta:
+        model = Author
+        fields = ['id', 'name']
+
 # The BookSerializer is used to handle serialization and deserialization of the author model
 
 # Relationship handling:
@@ -20,9 +29,3 @@ class BookSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("The publication year can not be in the future!")
         return value
 
-# The AuthorSerializer is user to convert the author model instances into a JSON format and vice versa
-# We include the author id so that the client API can use    it to refer to an auther's ID whenever needed and 'name' to see the authors name
-class AuthorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Author
-        fields = ['id', 'name']
