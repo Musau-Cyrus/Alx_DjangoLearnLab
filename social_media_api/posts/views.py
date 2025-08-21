@@ -1,11 +1,11 @@
 from rest_framework import viewsets, permissions
-from .models import Posts, Comment
+from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from .permisions import IsOwnerOrReadOnly
 
 #Post viewset
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Posts.objects.all().order_by('-created_at')
+    queryset = Post.objects.all().order_by('-created_at')
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
