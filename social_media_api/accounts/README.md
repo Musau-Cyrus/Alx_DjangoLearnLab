@@ -50,7 +50,7 @@ python manage.py migrate
 Registers a new user.
 
 ### Request Body:
-```bash
+```json
 {
   "username": "alice",
   "email": "alice@example.com",
@@ -59,7 +59,7 @@ Registers a new user.
 }
 ```
 ### Response:
-```bash
+```json
 {
   "id": 1,
   "username": "alice",
@@ -76,14 +76,14 @@ Registers a new user.
 Authenticates user and returns token.
 
 ### Request Body:
-```bash
+```json
 {
   "username": "alice",
   "password": "1234"
 }
 ```
 ### Response:
-```bash
+```json
 {
   "username": "alice",
   "token": "a1b2c3d4e5f6g7h8..."
@@ -101,7 +101,7 @@ Authorization: Token a1b2c3d4e5f6g7h8...
 ```
 
 ### Response:
-```bash
+```json
 {
   "id": 1,
   "username": "alice",
