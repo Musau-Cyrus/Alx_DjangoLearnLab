@@ -5,7 +5,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 User = settings.AUTH_USER_MODEL
 
-class Notifications(models.Model):
+class Notification(models.Model):
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications_sent")
     verb=models.CharField(max_length=255) #commented, liked, followed

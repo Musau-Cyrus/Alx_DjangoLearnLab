@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import Notifications
+from .models import Notification
 
 class NotificationsSerializer(serializers.ModelSerializer):
     actor=serializers.StringRelatedField()
     recipient = serializers.StringRelatedField()
 
     class Meta:
-        model = Notifications
+        model = Notification
     fields = ["id", "recipient", "actor", "verb", "target_object_id", "timestamp", "read"]

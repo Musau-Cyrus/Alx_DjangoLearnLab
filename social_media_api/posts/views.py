@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Post, Like
 from .serializers import LikeSerializer
-from notifications.models import Notifications
+from notifications.models import Notification
 from django.contrib.contenttypes.models import ContentType
 
 
@@ -59,7 +59,7 @@ class LikePostView(APIView):
 
         #Create notification
         if post.author != request.user:  # don’t notify self-like
-            Notifications.objects.create(
+            Notification.objects.create(
                 recipient=post.author,
                 actor=request.user,
                 verb="liked",
