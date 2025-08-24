@@ -46,19 +46,16 @@ class FeedView(generics.ListAPIView):
         return Post.objects.filter(author__in=following_users).order_by("-created_at")
     
 class LikePostView(APIView):
-    permission_classes=[permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, post_id):
-        post=get_object_or_404(Post, id=post_id)
-
-        #Prevent duplicate liking
-        if Like.objects.filter(user=request.user, post=post).exists():
+        post = get_object_or_404(Post, id=post_id)
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
+        if not created:
             return Response({"detail": "You already liked this post"}, status=status.HTTP_400_BAD_REQUEST)
         
-        like =Like.objects.create(user=request.user, post=post)
-
-        #Create notification
-        if post.author != request.user:  # don’t notify self-like
+        # Create notification
+        if post.author != request.user:
             Notification.objects.create(
                 recipient=post.author,
                 actor=request.user,
@@ -68,8 +65,8 @@ class LikePostView(APIView):
                 target_object_id=post.id,
             )
 
-            serializer = LikeSerializer(like)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer = LikeSerializer(like)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class UnlikePostView(APIView):
     permission_classes=[permissions.IsAuthenticated]
