@@ -138,7 +138,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ALLOWED_HOSTS = ["social_media_api.ondigitalocean.app"]
+ALLOWED_HOSTS = ["social_media_api.onrender.app"]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
