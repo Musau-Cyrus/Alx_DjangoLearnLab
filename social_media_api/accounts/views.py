@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework import permissions
 from rest_framework.views import APIView
 from .models import CustomUser
 from .serializers import RegisterSerializer, UserSerializer, LoginSerializer
@@ -29,7 +30,7 @@ class UserProfileView(generics.RetrieveAPIView):
         return self.request.user
 
 class FollowUserView(APIView):
-    permission_classes=[IsAuthenticated]
+    permission_classes=[permissions.IsAuthenticated]
 
     def post(self, request, username):
         target_user = get_object_or_404(CustomUser, username=username)
@@ -42,7 +43,7 @@ class FollowUserView(APIView):
         return Response({"detail": f"You are now following {target_user.username}"}, status=status.HTTP_200_OK)
 
 class UnfollowUser(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def delete(self, request, username):
         target_user = get_object_or_404(CustomUser, username=username)
